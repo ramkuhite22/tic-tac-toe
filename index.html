@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe : Sovereign Edition</title>
+    <meta name="description"
+        content="An ultra-premium, JSON-driven HTML5/CSS3/JS remaster of the classic C++ Tic Tac Toe game featuring interactive glassmorphic graphics, sound synthesis, keyboard controls (1-9), and advanced game modes.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js CDN -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Interactive Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="fx-canvas"></canvas>
+
+    <!-- Top Bar / Header -->
+    <header class="app-header">
+        <div class="header-brand">
+            <i class="fa-solid fa-crown brand-icon"></i>
+            <span class="brand-text">SOVEREIGN OS // <span id="app-version">v2.0</span></span>
+        </div>
+        <div class="header-controls">
+            <div class="control-group">
+                <label for="theme-select" class="sr-only">Select Theme</label>
+                <i class="fa-solid fa-palette control-icon"></i>
+                <select id="theme-select" class="glass-select"></select>
+            </div>
+            <button id="btn-audio" class="glass-btn btn-icon" aria-label="Toggle Audio" title="Toggle Sound Effects">
+                <i class="fa-solid fa-volume-high"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+        <h1 class="sr-only">Tic Tac Toe Sovereign Edition</h1>
+
+        <!-- 1. PASSWORD SCREEN -->
+        <section id="screen-password" class="screen glass-panel active">
+            <div class="screen-header">
+                <i class="fa-solid fa-shield-halved screen-logo"></i>
+                <h2>SECURITY CLEARANCE REQUIRED</h2>
+                <p id="password-prompt">Loading security module...</p>
+            </div>
+            <form id="password-form" class="auth-form">
+                <div class="input-group">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="password-input" placeholder="Enter password..." maxlength="20" autofocus
+                        autocomplete="off">
+                    <button type="submit" id="btn-submit-pass" class="glow-btn">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="attempts-tracker">
+                    <span>Attempts remaining: <strong id="attempts-count">4</strong></span>
+                    <div class="attempts-bar">
+                        <div id="attempts-progress" class="progress-fill"></div>
+                    </div>
+                </div>
+                <div id="password-feedback" class="feedback-msg"></div>
+            </form>
+        </section>
+
+        <!-- 2. MAIN MENU SCREEN -->
+        <section id="screen-menu" class="screen glass-panel hidden">
+            <div class="screen-header">
+                <i class="fa-solid fa-gamepad screen-logo"></i>
+                <h2 id="menu-title">MAIN MENU</h2>
+                <p id="menu-subtitle">Select an operating mode</p>
+            </div>
+            <nav class="menu-nav" id="menu-options-container">
+                <!-- Dynamically populated from JSON -->
+            </nav>
+            <div class="menu-footer">
+                <p class="author-credits" id="author-credits"></p>
+                <p class="author-source" id="author-source"></p>
+            </div>
+        </section>
+
+        <!-- 2b. AI DIFFICULTY SELECTION SCREEN -->
+        <section id="screen-ai-level" class="screen glass-panel hidden">
+            <div class="screen-header">
+                <i class="fa-solid fa-brain screen-logo"></i>
+                <h2 id="ai-level-title">AI SOVEREIGN DIFFICULTY</h2>
+                <p id="ai-level-subtitle">Select computational intelligence level</p>
+            </div>
+            <nav class="menu-nav" id="ai-levels-container">
+                <!-- Dynamically populated from JSON -->
+            </nav>
+            <div class="menu-footer">
+                <button id="btn-ai-back" class="glass-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Menu
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. GAME SCREEN -->
+        <section id="screen-game" class="screen glass-panel hidden">
+            <div class="game-header">
+                <button id="btn-game-back" class="glass-btn btn-sm">
+                    <i class="fa-solid fa-arrow-left"></i> Menu
+                </button>
+                <div class="matchup-display">
+                    <div class="player-badge p1-badge active">
+                        <span class="player-name" id="p1-name">Player 1</span>
+                        <span class="player-symbol">X</span>
+                        <span class="player-score" id="p1-score">0</span>
+                    </div>
+                    <div class="vs-badge">VS <span id="ai-difficulty-badge" class="diff-badge hidden"></span></div>
+                    <div class="player-badge p2-badge">
+                        <span class="player-name" id="p2-name">Player 2</span>
+                        <span class="player-symbol">O</span>
+                        <span class="player-score" id="p2-score">0</span>
+                    </div>
+                </div>
+                <button id="btn-game-reset" class="glass-btn btn-sm" title="Reset Board">
+                    <i class="fa-solid fa-rotate-right"></i> Reset
+                </button>
+            </div>
+
+            <div class="turn-indicator-box">
+                <h3 id="turn-display">Player 1, enter a number: </h3>
+                <p class="keyboard-hint"><i class="fa-solid fa-keyboard"></i> Tip: Use Numpad / Keys 1-9 to select cells
+                </p>
+            </div>
+
+            <div class="board-container">
+                <div id="board-3d-container"></div>
+                <div id="game-board" class="game-grid hidden">
+                    <!-- Dynamically populated 3x3 grid -->
+                </div>
+                <div id="win-line" class="win-line hidden"></div>
+            </div>
+
+            <div class="game-footer">
+                <div id="game-status-panel" class="status-panel hidden glass-card">
+                    <h4 id="status-title">==>Player 1 win <==</h4>
+                    <p id="continue-prompt" class="continue-prompt">Do you want to continue? (Y/N)</p>
+                    <div class="status-actions">
+                        <button id="btn-play-again" class="glow-btn">Yes (Play Again)</button>
+                        <button id="btn-menu-return" class="glass-btn">No (Main Menu)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. USER GUIDE SCREEN -->
+        <section id="screen-guide" class="screen glass-panel hidden">
+            <div class="screen-header">
+                <i class="fa-solid fa-book-open screen-logo"></i>
+                <h2 id="guide-title">USER GUIDE</h2>
+                <p>System documentation and operational rules</p>
+            </div>
+            <div class="guide-content" id="guide-content-container">
+                <!-- Dynamically populated from JSON -->
+            </div>
+            <div class="guide-footer">
+                <button id="btn-guide-back" class="glow-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Return to Menu
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+        <p>Sovereign AI Engine // Powered by HTML5, CSS3 & Vanilla JS</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        <i id="toast-icon" class="fa-solid fa-circle-info toast-icon"></i>
+        <span id="toast-msg">Notification message</span>
+    </div>
+
+    <!-- Custom Script -->
+    <script defer src="app.js"></script>
+</body>
+
+</html>

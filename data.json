@@ -1,0 +1,210 @@
+{
+  "gameMetadata": {
+    "title": "Tic Tac Toe : Sovereign Edition",
+    "version": "2.0.0",
+    "author": "Submitted By Sanket Chikate ( schikate@gmail.com ) | Remastered by Ram Kuhite",
+    "source": "Downloaded From c4cpp.co.nr",
+    "description": "An ultra-premium, JSON-driven HTML5/CSS3/JS remaster of the classic C++ Tic Tac Toe game featuring interactive glassmorphic graphics, sound synthesis, keyboard controls (1-9), and advanced game modes."
+  },
+  "security": {
+    "authRequired": true,
+    "password": "243921",
+    "maxAttempts": 4,
+    "prompts": {
+      "enter": "Enter the password within a trial period of 4 times:",
+      "granted": "ACESS GRANTED",
+      "denied": "ACESS DENIED ",
+      "locked": "You have entered the wrong password 4 times"
+    }
+  },
+  "menu": {
+    "title": "MAIN MENU",
+    "subtitle": "Select an operating mode",
+    "options": [
+      {
+        "id": "play_pvp",
+        "label": "1.ENTER THE GAME (Player vs Player)",
+        "icon": "fa-user-friends",
+        "action": "game_pvp"
+      },
+      {
+        "id": "play_ai",
+        "label": "1b.ENTER THE GAME (Player vs AI Mode)",
+        "icon": "fa-robot",
+        "action": "game_ai"
+      },
+      {
+        "id": "guide",
+        "label": "2.USER GUIDE",
+        "icon": "fa-book-open",
+        "action": "guide"
+      },
+      {
+        "id": "exit",
+        "label": "3.EXIT",
+        "icon": "fa-power-off",
+        "action": "exit"
+      }
+    ]
+  },
+  "game": {
+    "boardSize": 3,
+    "players": {
+      "1": {
+        "name": "Player 1",
+        "symbol": "X",
+        "color": "var(--primary)",
+        "glow": "0 0 25px var(--primary)"
+      },
+      "2": {
+        "name": "Player 2",
+        "symbol": "O",
+        "color": "var(--secondary)",
+        "glow": "0 0 25px var(--secondary)"
+      }
+    },
+    "winCombinations": [
+      [
+        0,
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5
+      ],
+      [
+        6,
+        7,
+        8
+      ],
+      [
+        0,
+        3,
+        6
+      ],
+      [
+        1,
+        4,
+        7
+      ],
+      [
+        2,
+        5,
+        8
+      ],
+      [
+        0,
+        4,
+        8
+      ],
+      [
+        2,
+        4,
+        6
+      ]
+    ],
+    "messages": {
+      "turn": "Player {player}, enter a number: ",
+      "win": "==>Player {player} win ",
+      "draw": "==>Game draw",
+      "invalid": "Invalid move ",
+      "continue": "Do you want to continue? (Y/N)"
+    },
+    "aiLevels": {
+      "title": "AI SOVEREIGN DIFFICULTY",
+      "subtitle": "Select computational intelligence level",
+      "levels": [
+        { "id": "easy", "name": "EASY", "desc": "Randomized neural pathways. Prone to errors.", "icon": "fa-seedling" },
+        { "id": "medium", "name": "MEDIUM", "desc": "Tactical defense matrix. Blocks and secures wins.", "icon": "fa-shield-halved" },
+        { "id": "hard", "name": "HARD (PRO)", "desc": "Minimax absolute computation. Mathematically unbeatable.", "icon": "fa-brain" }
+      ]
+    }
+  },
+  "guide": {
+    "title": "TIC-TAC-TOE : USER GUIDE",
+    "sections": [
+      {
+        "heading": "Board Structure",
+        "content": "The TIC-TAC-TOE games board is similar to that of # key or it looks something like this :\n    _|_|_\n    _|_|_\n     | | \n\nIn this gaps turn by turn crosses and zeroes have to be filled up.",
+        "visual": "grid_layout"
+      },
+      {
+        "heading": "Objective & Rules",
+        "content": "TIC-TAC-TOE is basically a X and O game in which the player has to complete 3 crosses or zeroe which may be horizontal vertical or even diagonal.",
+        "visual": "win_examples"
+      }
+    ],
+    "examples": [
+      {
+        "title": "Horizontal Win",
+        "board": [
+          "X",
+          "X",
+          "X",
+          " ",
+          " ",
+          " ",
+          " ",
+          " ",
+          " "
+        ]
+      },
+      {
+        "title": "Vertical Win",
+        "board": [
+          "X",
+          " ",
+          " ",
+          "X",
+          " ",
+          " ",
+          "X",
+          " ",
+          " "
+        ]
+      },
+      {
+        "title": "Diagonal Win",
+        "board": [
+          "X",
+          " ",
+          " ",
+          " ",
+          "X",
+          " ",
+          " ",
+          " ",
+          "X"
+        ]
+      }
+    ]
+  },
+  "themes": [
+    {
+      "id": "cyberpunk",
+      "name": "Cyberpunk Neon",
+      "bg": "radial-gradient(circle at 50% 50%, #1a0b2e, #090410)",
+      "primary": "#ff007f",
+      "secondary": "#00f0ff",
+      "surface": "rgba(255, 255, 255, 0.05)"
+    },
+    {
+      "id": "ethereal",
+      "name": "Ethereal Gold",
+      "bg": "radial-gradient(circle at 50% 50%, #1f1c18, #0b0a08)",
+      "primary": "#ffd700",
+      "secondary": "#ff8c00",
+      "surface": "rgba(255, 215, 0, 0.05)"
+    },
+    {
+      "id": "matrix",
+      "name": "Matrix Terminal",
+      "bg": "radial-gradient(circle at 50% 50%, #051a05, #010a01)",
+      "primary": "#00ff41",
+      "secondary": "#008f11",
+      "surface": "rgba(0, 255, 65, 0.05)"
+    }
+  ]
+}
